@@ -9,12 +9,14 @@ router.post(
   "/create-patient",
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
-    UserValidation.createPatientValidationSchema.parse(
+    req.body = UserValidation.createPatientValidationSchema.parse(
       JSON.parse(req.body.data)
     );
-
     return UserController.createPatient(req, res, next);
   }
 );
+
+// create doctor
+// create admin
 
 export const userRoutes = router;

@@ -8,10 +8,11 @@ const createPatient = async (req: Request) => {
     const uploadResult = await fileUploader.uploadToCloudinary(req.file);
     req.body.patient.profilePhoto = uploadResult?.secure_url;
   }
+
   const hashPassword = await bcrypt.hash(req.body.password, 10);
 
   const result = await prisma.$transaction(async (tnx) => {
-    const user = await tnx.user.create({
+    await tnx.user.create({
       data: {
         email: req.body.patient.email,
         password: hashPassword,
