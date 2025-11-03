@@ -10,7 +10,7 @@ const auth = (...roles: string[]) => {
     try {
       const token = req.cookies?.accessToken;
       //   const token = req.cookies.get("accessToken");
-      console.log("auth", token);
+
       if (!token) {
         throw new Error("You are not authorized!");
       }
