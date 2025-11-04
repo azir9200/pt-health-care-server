@@ -5,6 +5,8 @@ import { fileUploader } from "../../helper/fileUploader";
 import { Admin, Doctor, Prisma, UserRole } from "@prisma/client";
 import { IOptions, paginationHelper } from "../../helper/paginationHelper";
 import { userSearchableFields } from "./user.constant";
+import ApiError from "../../errors/ApiError";
+import httpStatus from "http-status";
 
 const createPatient = async (req: Request) => {
   if (req.file) {
@@ -19,7 +21,7 @@ const createPatient = async (req: Request) => {
       where: { email: req.body.patient.email },
     });
     if (existingUser) {
-      throw new Error("Email already exists!");
+      throw new ApiError(httpStatus.BAD_REQUEST, "Email already exists!!");
     }
 
     const user = await tnx.user.create({
@@ -164,7 +166,6 @@ const getAllFromDB = async (params: any, options: IOptions) => {
     data: result,
   };
 };
-
 
 const getAllAdminFromDB = async (params: any, options: IOptions) => {
   const { page, limit, skip, sortBy, sortOrder } =
