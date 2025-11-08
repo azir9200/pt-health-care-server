@@ -14,10 +14,12 @@ const login = async (payload: { email: string; password: string }) => {
       status: UserStatus.ACTIVE,
     },
   });
+  console.log("user", user);
   const isCorrectPassword = await bcrypt.compare(
     payload.password,
     user.password
   );
+  console.log("login service", isCorrectPassword);
   if (!isCorrectPassword) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Password is incorrect!");
   }

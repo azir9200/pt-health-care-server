@@ -10,9 +10,11 @@ const router = express.Router();
 router.post(
   "/",
   auth(UserRole.DOCTOR),
-  validateRequest(
-    DoctorScheduleValidation.createDoctorScheduleValidationSchema
-  ),
+
+  // validateRequest(
+  //   DoctorScheduleValidation.createDoctorScheduleValidationSchema
+  // ),
+
   DoctorScheduleController.insertIntoDB
 );
 

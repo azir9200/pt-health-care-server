@@ -12,6 +12,10 @@ import { AppointmentRoutes } from "../modules/appointment/appointment.routes";
 const router = express.Router();
 
 const moduleRoutes = [
+  // {
+  //   path: "/test",
+  //   route: testRoutes,
+  // },
   {
     path: "/user",
     route: userRoutes,
