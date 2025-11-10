@@ -5,6 +5,7 @@ import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
+ 
     const result = await SpecialtiesService.insertIntoDB(req);
 
     sendResponse(res, {

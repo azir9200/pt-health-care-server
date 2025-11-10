@@ -1,5 +1,9 @@
-router.post(
-  "/webhook",
-  express.raw({ type: "application/json" }), // important for signature verification
-  stripeWebhookHandler
-);
+// import express from "express";
+// import { PaymentController } from "./payment.controller";
+// const router = express.Router();
+// router.post(
+//   "/webhook",
+//   express.raw({ type: "application/json" }),
+//   // stripeWebhookHandler,
+//   PaymentController.handleStripeWebhookEvent
+// );
