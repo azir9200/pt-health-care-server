@@ -7,10 +7,12 @@ const insertIntoDB = async (
   payload: CreateDoctorScheduleInput
 ) => {
   try {
+    console.log("service", payload);
     // Verify doctor account
     const doctor = await prisma.doctor.findUnique({
       where: { email: user.email },
     });
+    console.log("doctor", doctor);
 
     if (!doctor) {
       throw new Error("Doctor not found for the provided user email");

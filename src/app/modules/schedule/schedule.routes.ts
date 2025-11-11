@@ -9,7 +9,7 @@ router.get("/", auth(UserRole.ADMIN), ScheduleController.schedulesForDoctor);
 
 router.post(
   "/",
-     auth(UserRole.ADMIN),
+  //  auth(UserRole.ADMIN),
   ScheduleController.insertIntoDB
 );
 //   auth(UserRole.ADMIN),

@@ -13,7 +13,7 @@ router.get("/", SpecialtiesController.getAllFromDB);
 
 router.post(
   "/",
-  // auth(UserRole.ADMIN),
+  auth(UserRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = SpecialtiesValidation.create.parse(JSON.parse(req.body.data));

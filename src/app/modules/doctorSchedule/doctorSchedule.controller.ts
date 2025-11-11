@@ -27,6 +27,7 @@ const insertIntoDB = catchAsync(
 const getAllFromDB = catchAsync(
   async (req: Request & { user?: IJWTPayload }, res: Response) => {
     const user = req.user;
+    console.log("object doctor", user);
     const result = await DoctorScheduleService.getAllFromDB(user);
 
     sendResponse(res, {
