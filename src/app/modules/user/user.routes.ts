@@ -9,6 +9,11 @@ const router = express.Router();
 
 // router.get("/", UserController.getAllFromDB);
 router.get("/", auth(UserRole.ADMIN), UserController.getAllFromDB);
+router.get(
+  "/me",
+  auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  UserController.getMyProfile
+);
 
 router.post(
   "/create-patient",
@@ -43,6 +48,21 @@ router.post(
       JSON.parse(req.body.data)
     );
     return UserController.createDoctor(req, res, next);
+  }
+);
+router.patch(
+  "/:id/status",
+  auth(UserRole.ADMIN),
+  UserController.changeProfileStatus
+);
+
+router.patch(
+  "/update-my-profile",
+  auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  fileUploader.upload.single("file"),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    return UserController.updateMyProfile(req, res, next);
   }
 );
 
