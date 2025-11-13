@@ -3,6 +3,7 @@ import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 import { AuthService } from "./auth.service";
 import { access } from "fs";
+import httpStatus from "http-status";
 
 const login = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.login(req.body);
@@ -31,7 +32,21 @@ const login = catchAsync(async (req: Request, res: Response) => {
     },
   });
 });
+const getMe = catchAsync(async (req: Request, res: Response) => {
+    const userSession = req.cookies;
+    const result = await AuthService.getMe(userSession);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "User retrive successfully!",
+        data: result,
+    });
+});
 
 export const AuthController = {
   login,
+  getMe,
+
 };
+
