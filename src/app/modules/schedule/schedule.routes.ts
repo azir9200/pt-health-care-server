@@ -7,12 +7,8 @@ const router = express.Router();
 
 router.get("/", auth(UserRole.ADMIN), ScheduleController.schedulesForDoctor);
 
-router.post(
-  "/",
-  //  auth(UserRole.ADMIN),
-  ScheduleController.insertIntoDB
-);
-//   auth(UserRole.ADMIN),
+router.post("/", auth(UserRole.ADMIN), ScheduleController.insertIntoDB);
+
 router.delete(
   "/:id",
 

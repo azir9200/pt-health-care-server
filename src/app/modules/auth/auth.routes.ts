@@ -13,7 +13,7 @@ router.post("/refresh-token", AuthController.refreshToken);
 
 router.post(
   "/change-password",
-  // auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   AuthController.changePassword
 );
 
