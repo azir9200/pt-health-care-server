@@ -6,15 +6,17 @@ import { prisma } from "../../shared/prisma";
 
 const fetchDashboardMetaData = async (user: IJWTPayload) => {
   let metadata;
-  switch (user.role) {
+  switch (user?.role) {
     case UserRole.ADMIN:
       metadata = await getAdminMetaData();
+      console.log("object meta admin", metadata);
       break;
     case UserRole.DOCTOR:
       metadata = await getDoctorMetaData(user);
       break;
     case UserRole.PATIENT:
       metadata = await getPatientMetaData(user);
+      console.log("object meta user", metadata);
       break;
     default:
       throw new ApiError(httpStatus.BAD_REQUEST, "Invalid user role!");
@@ -29,6 +31,13 @@ const getDoctorMetaData = async (user: IJWTPayload) => {
       email: user?.email,
     },
   });
+  console.log("JWT USER:", doctorData);
+  if (!doctorData) {
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "Doctor profile not found for this user"
+    );
+  }
 
   const appointmentCount = await prisma.appointment.count({
     where: {
@@ -42,7 +51,7 @@ const getDoctorMetaData = async (user: IJWTPayload) => {
       id: true,
     },
   });
-
+  console.log("back meta service", patientCount);
   const reviewCount = await prisma.review.count({
     where: {
       doctorId: doctorData.id,
@@ -85,12 +94,19 @@ const getDoctorMetaData = async (user: IJWTPayload) => {
 };
 
 const getPatientMetaData = async (user: IJWTPayload) => {
+  console.log("back meta service", user);
   const patientData = await prisma.patient.findUniqueOrThrow({
     where: {
       email: user?.email,
     },
   });
-
+  console.log("back meta service", getPatientMetaData);
+  if (!patientData) {
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      "Patient profile not found for this user"
+    );
+  }
   const appointmentCount = await prisma.appointment.count({
     where: {
       patientId: patientData.id,
@@ -133,6 +149,7 @@ const getPatientMetaData = async (user: IJWTPayload) => {
 
 const getAdminMetaData = async () => {
   const patientCount = await prisma.patient.count();
+  console.log("Backend meta service", patientCount);
   const doctorCount = await prisma.doctor.count();
   const adminCount = await prisma.admin.count();
   const appointmentCount = await prisma.appointment.count();

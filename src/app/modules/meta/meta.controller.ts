@@ -5,20 +5,24 @@ import catchAsync from "../../shared/catchAsync";
 import { IJWTPayload } from "../../types/common";
 import sendResponse from "../../shared/sendResponse";
 
-
-const fetchDashboardMetaData = catchAsync(async (req: Request & { user?: IJWTPayload }, res: Response) => {
-
+const fetchDashboardMetaData = catchAsync(
+  async (req: Request & { user?: IJWTPayload }, res: Response) => {
     const user = req.user;
-    const result = await MetaService.fetchDashboardMetaData(user as IJWTPayload);
+
+    const result = await MetaService.fetchDashboardMetaData(
+      user as IJWTPayload
+    );
+    console.log("Back Controller meta", result);
 
     sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: "Meta data retrieval successfully!",
-        data: result
-    })
-});
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Meta data retrieval successfully!",
+      data: result,
+    });
+  }
+);
 
 export const MetaController = {
-    fetchDashboardMetaData
-}
+  fetchDashboardMetaData,
+};

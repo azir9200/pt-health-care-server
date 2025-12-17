@@ -15,14 +15,30 @@ import { MetaRoutes } from "../modules/meta/meta.routes";
 const router = express.Router();
 
 const moduleRoutes = [
- 
   {
     path: "/user",
     route: userRoutes,
   },
+   {
+        path: '/admin',
+        route: AdminRoutes
+    },
   {
     path: "/auth",
     route: authRoutes,
+  },
+   {
+        path: '/specialties',
+        route: SpecialtiesRoutes
+    },
+     {
+    path: "/doctor",
+    route: DoctorRoutes,
+  },
+ 
+  {
+    path: "/patient",
+    route: PatientRoutes,
   },
   {
     path: "/schedule",
@@ -32,26 +48,16 @@ const moduleRoutes = [
     path: "/doctor-schedule",
     route: doctorScheduleRoutes,
   },
-  {
-    path: "/specialties",
-    route: SpecialtiesRoutes,
-  },
-  {
-    path: "/doctor",
-    route: DoctorRoutes,
-  },
-  {
-    path: "/admin",
-    route: AdminRoutes,
-  },
-  {
-    path: "/patient",
-    route: PatientRoutes,
-  },
+ 
+ 
   {
     path: "/appointment",
     route: AppointmentRoutes,
   },
+  //  {
+  //       path: '/payment',
+  //       route: PaymentRoutes
+  //   },
   {
     path: "/prescription",
     route: PrescriptionRoutes,
@@ -61,7 +67,7 @@ const moduleRoutes = [
     route: ReviewRoutes,
   },
   {
-    path: "/metadata",
+    path: "/meta",
     route: MetaRoutes,
   },
 ];
