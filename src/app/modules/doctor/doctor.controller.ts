@@ -46,6 +46,7 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 const getAISuggestions = catchAsync(async (req: Request, res: Response) => {
   const result = await DoctorService.getAISuggestions(req.body);
+  console.log("doctot contr", result);
   sendResponse(res, {
     statusCode: 200,
     success: true,
