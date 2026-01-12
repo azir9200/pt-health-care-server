@@ -68,6 +68,11 @@ const getAllFromDB = async (filters: any, options: IOptions) => {
           specialities: true,
         },
       },
+      doctorSchedules: {
+        include: {
+          schedule: true,
+        },
+      },
       reviews: {
         select: {
           rating: true,
