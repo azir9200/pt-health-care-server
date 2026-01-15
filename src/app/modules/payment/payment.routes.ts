@@ -1,9 +1,8 @@
-// import express from "express";
-// import { PaymentController } from "./payment.controller";
-// const router = express.Router();
-// router.post(
-//   "/webhook",
-//   express.raw({ type: "application/json" }),
-//   // stripeWebhookHandler,
-//   PaymentController.handleStripeWebhookEvent
-// );
+import express from 'express';
+
+const router = express.Router();
+
+// Webhook route is registered in app.ts before other middleware
+// This file is kept for potential future payment-related routes
+
+export const PaymentRoutes = router;

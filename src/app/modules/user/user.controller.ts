@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
-import { UserService } from "./user.service";
 import sendResponse from "../../shared/sendResponse";
-import pick from "../../helper/pick";
+import pick from "../../shared/pick";
 import { userFilterableFields } from "./user.constant";
 import httpStatus from "http-status";
 import { IJWTPayload } from "../../types/common";
+import { UserService } from "./user.service";
 
 const createPatient = catchAsync(async (req: Request, res: Response) => {
   const result = await UserService.createPatient(req);
@@ -83,7 +83,7 @@ const updateMyProfile = catchAsync(
   async (req: Request & { user?: IJWTPayload }, res: Response) => {
     const user = req.user;
 
-    const result = await UserService.updateMyProfile(user as IJWTPayload, req);
+    const result = await UserService.updateMyProfie(user as IJWTPayload, req);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,

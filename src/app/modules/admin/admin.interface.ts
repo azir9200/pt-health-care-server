@@ -1,9 +1,8 @@
 
 
-export type IAdminUpdateInput = {
-    email: string;
-    contactNumber: string;   
-    name: string;  
-    isDeleted: boolean;
-    
+export type IAdminFilterRequest = {
+    name?: string | undefined;
+    email?: string | undefined;
+    contactNumber?: string | undefined;
+    searchTerm?: string | undefined;
 }
