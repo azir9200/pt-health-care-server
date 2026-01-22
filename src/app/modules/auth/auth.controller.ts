@@ -53,6 +53,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     refreshTokenMaxAge = 1000 * 60 * 60 * 24 * 30; // default 30 days
   }
   const result = await AuthServices.loginUser(req.body);
+
   const { refreshToken, accessToken } = result;
   res.cookie("accessToken", accessToken, {
     secure: true,
@@ -168,7 +169,7 @@ const changePassword = catchAsync(
       message: "Password Changed successfully",
       data: result,
     });
-  }
+  },
 );
 
 const forgotPassword = catchAsync(async (req: Request, res: Response) => {
@@ -186,7 +187,7 @@ const resetPassword = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
     // Extract token from Authorization header (remove "Bearer " prefix)
     const authHeader = req.headers.authorization;
-    console.log({ authHeader });
+   
     const token = authHeader ? authHeader.replace("Bearer ", "") : null;
     const user = req.user; // Will be populated if authenticated via middleware
 
@@ -198,7 +199,7 @@ const resetPassword = catchAsync(
       message: "Password Reset!",
       data: null,
     });
-  }
+  },
 );
 
 const getMe = catchAsync(
@@ -213,7 +214,7 @@ const getMe = catchAsync(
       message: "User retrieved successfully",
       data: result,
     });
-  }
+  },
 );
 
 export const AuthController = {

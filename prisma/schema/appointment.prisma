@@ -1,3 +1,5 @@
+
+
 model Appointment {
   id        String  @id @default(uuid())
   patientId String

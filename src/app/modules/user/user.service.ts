@@ -350,7 +350,7 @@ const getMyProfile = async (user: IAuthUser) => {
         createdAt: true,
         updatedAt: true,
         patientHealthData: true,
-        medicalReport: {
+        medicalReports: {
           select: {
             id: true,
             patientId: true,

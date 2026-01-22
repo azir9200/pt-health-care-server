@@ -5,11 +5,10 @@ import { patientSearchableFields } from "./patient.constant";
 import { IPatientFilterRequest, IPatientUpdate } from "./patient.interface";
 import { IPaginationOptions } from "../../interfaces/pagination";
 
-
 const getAllFromDB = async (
   filters: IPatientFilterRequest,
   options: IPaginationOptions,
-  includeHealthData: boolean = false // NEW PARAMETER
+  includeHealthData: boolean = false, // NEW PARAMETER
 ) => {
   const { limit, page, skip } = paginationHelper.calculatePagination(options);
   const { searchTerm, ...filterData } = filters;
@@ -49,18 +48,18 @@ const getAllFromDB = async (
   // Conditional include based on parameter
   const includeClause = includeHealthData
     ? {
-      medicalReport: true,
-      patientHealthData: true,
-    }
+        medicalReports: true,
+        patientHealthData: true,
+      }
     : {
-      medicalReport: {
-        select: {
-          id: true,
-          reportName: true,
-          createdAt: true,
+        medicalReports: {
+          select: {
+            id: true,
+            reportName: true,
+            createdAt: true,
+          },
         },
-      },
-    };
+      };
 
   const result = await prisma.patient.findMany({
     where: whereConditions,
@@ -70,8 +69,8 @@ const getAllFromDB = async (
       options.sortBy && options.sortOrder
         ? { [options.sortBy]: options.sortOrder }
         : {
-          createdAt: "desc",
-        },
+            createdAt: "desc",
+          },
     include: includeClause,
   });
 
@@ -96,96 +95,95 @@ const getByIdFromDB = async (id: string): Promise<Patient | null> => {
       isDeleted: false,
     },
     include: {
-      medicalReport: true,
+      medicalReports: true,
       patientHealthData: true,
     },
   });
   return result;
 };
 
-const updateIntoDB = async (id: string, payload: Partial<IPatientUpdate>): Promise<Patient | null> => {
-
+const updateIntoDB = async (
+  id: string,
+  payload: Partial<IPatientUpdate>,
+): Promise<Patient | null> => {
   const { patientHealthData, medicalReport, ...patientData } = payload;
 
   const patientInfo = await prisma.patient.findUniqueOrThrow({
     where: {
       id,
-      isDeleted: false
-    }
+      isDeleted: false,
+    },
   });
 
   await prisma.$transaction(async (transactionClient) => {
     //update patient data
     await transactionClient.patient.update({
       where: {
-        id
+        id,
       },
       data: patientData,
       include: {
         patientHealthData: true,
-        medicalReport: true
-      }
+        medicalReports: true,
+      },
     });
 
     // create or update patient health data
     if (patientHealthData) {
       await transactionClient.patientHealthData.upsert({
         where: {
-          patientId: patientInfo.id
+          patientId: patientInfo.id,
         },
         update: patientHealthData,
-        create: { ...patientHealthData, patientId: patientInfo.id }
+        create: { ...patientHealthData, patientId: patientInfo.id },
       });
-    };
+    }
 
     if (medicalReport) {
       await transactionClient.medicalReport.create({
-        data: { ...medicalReport, patientId: patientInfo.id }
-      })
+        data: { ...medicalReport, patientId: patientInfo.id },
+      });
     }
-  })
-
+  });
 
   const responseData = await prisma.patient.findUnique({
     where: {
-      id: patientInfo.id
+      id: patientInfo.id,
     },
     include: {
       patientHealthData: true,
-      medicalReport: true
-    }
-  })
+      medicalReports: true,
+    },
+  });
   return responseData;
-
 };
-
 
 const deleteFromDB = async (id: string): Promise<Patient | null> => {
   const result = await prisma.$transaction(async (tx) => {
     // delete medical report
     await tx.medicalReport.deleteMany({
       where: {
-        patientId: id
-      }
+        patientId: id,
+      },
     });
 
     // delete patient health data
     await tx.patientHealthData.delete({
       where: {
-        patientId: id
-      }
+        patientId: id,
+      },
     });
 
     const deletedPatient = await tx.patient.delete({
       where: {
-        id
-      }
+        id,
+      },
     });
 
     await tx.user.delete({
       where: {
-        email: deletedPatient.email
-      }
+        email: deletedPatient.email,
+      },
     });
 
     return deletedPatient;
@@ -195,7 +193,7 @@ const deleteFromDB = async (id: string): Promise<Patient | null> => {
 };
 
 const softDelete = async (id: string): Promise<Patient | null> => {
-  return await prisma.$transaction(async transactionClient => {
+  return await prisma.$transaction(async (transactionClient) => {
     const deletedPatient = await transactionClient.patient.update({
       where: { id },
       data: {

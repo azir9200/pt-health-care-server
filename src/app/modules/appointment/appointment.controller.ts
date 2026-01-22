@@ -11,10 +11,12 @@ import pick from "../../shared/pick";
 const createAppointment = catchAsync(
   async (req: Request & { user?: IJWTPayload }, res: Response) => {
     const user = req.user;
+
     const result = await AppointmentService.createAppointment(
       user as IJWTPayload,
-      req.body
+      req.body,
     );
+   
 
     sendResponse(res, {
       statusCode: 201,
@@ -22,7 +24,7 @@ const createAppointment = catchAsync(
       message: "Appointment created successfully!",
       data: result,
     });
-  }
+  },
 );
 const getMyAppointment = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
@@ -33,7 +35,7 @@ const getMyAppointment = catchAsync(
     const result = await AppointmentService.getMyAppointment(
       user as IAuthUser,
       filters,
-      options
+      options,
     );
 
     sendResponse(res, {
@@ -43,7 +45,7 @@ const getMyAppointment = catchAsync(
       data: result.data,
       meta: result.meta,
     });
-  }
+  },
 );
 
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
@@ -67,7 +69,7 @@ const changeAppointmentStatus = catchAsync(
     const result = await AppointmentService.updateAppointmentStatus(
       id,
       status,
-      user as IAuthUser
+      user as IAuthUser,
     );
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -75,7 +77,7 @@ const changeAppointmentStatus = catchAsync(
       message: "Appointment status changed successfully",
       data: result,
     });
-  }
+  },
 );
 
 const createAppointmentWithPayLater = catchAsync(
@@ -84,7 +86,7 @@ const createAppointmentWithPayLater = catchAsync(
 
     const result = await AppointmentService.createAppointmentWithPayLater(
       user as IAuthUser,
-      req.body
+      req.body,
     );
 
     sendResponse(res, {
@@ -93,7 +95,7 @@ const createAppointmentWithPayLater = catchAsync(
       message: "Appointment booked successfully! You can pay later.",
       data: result,
     });
-  }
+  },
 );
 
 const initiatePayment = catchAsync(
@@ -103,7 +105,7 @@ const initiatePayment = catchAsync(
 
     const result = await AppointmentService.initiatePaymentForAppointment(
       id,
-      user as IAuthUser
+      user as IAuthUser,
     );
 
     sendResponse(res, {
@@ -112,7 +114,7 @@ const initiatePayment = catchAsync(
       message: "Payment session created successfully",
       data: result,
     });
-  }
+  },
 );
 
 // const updateAppointmentStatus = catchAsync(

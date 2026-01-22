@@ -9,6 +9,7 @@ import config from "../../../config";
 // import emailSender from "./emailSender";
 import { emit } from "process";
 import emailSender from "./emailSender";
+
 const loginUser = async (payload: { email: string; password: string }) => {
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
@@ -261,7 +262,7 @@ const resetPassword = async (
   }
   // Case 2: Authenticated user with needPasswordChange (newly created admin/doctor)
   else if (user && user.email) {
-    console.log({ user }, "needpassworchange");
+  
     const authenticatedUser = await prisma.user.findUniqueOrThrow({
       where: {
         email: user.email,

@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 cron.schedule("* * * * *", () => {
   try {
-    // console.log("Node cron called at ", new Date());
+  
     AppointmentService.cancelUnpaidAppointments();
   } catch (err) {
     console.error(err);
