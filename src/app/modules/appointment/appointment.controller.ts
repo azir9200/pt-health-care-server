@@ -16,7 +16,6 @@ const createAppointment = catchAsync(
       user as IJWTPayload,
       req.body,
     );
-   
 
     sendResponse(res, {
       statusCode: 201,
@@ -62,7 +61,8 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 const changeAppointmentStatus = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
-    const { id } = req.params;
+    const id = req.params.id as string;
+
     const { status } = req.body;
     const user = req.user;
 
@@ -101,7 +101,7 @@ const createAppointmentWithPayLater = catchAsync(
 const initiatePayment = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
     const user = req.user;
-    const { id } = req.params;
+    const id = req.params.id as string;
 
     const result = await AppointmentService.initiatePaymentForAppointment(
       id,
@@ -119,7 +119,8 @@ const initiatePayment = catchAsync(
 
 // const updateAppointmentStatus = catchAsync(
 //   async (req: Request & { user?: IJWTPayload }, res: Response) => {
-//     const { id } = req.params;
+//     const id = req.params.id as string;
+
 //     const { status } = req.body;
 //     const user = req.user;
 

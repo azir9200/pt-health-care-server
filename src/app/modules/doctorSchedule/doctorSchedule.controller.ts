@@ -18,7 +18,7 @@ const insertIntoDB = catchAsync(
       message: "Doctor Schedule created successfully!",
       data: result,
     });
-  }
+  },
 );
 
 const getMySchedule = catchAsync(
@@ -30,7 +30,7 @@ const getMySchedule = catchAsync(
     const result = await DoctorScheduleService.getMySchedule(
       filters,
       options,
-      user as IAuthUser
+      user as IAuthUser,
     );
 
     sendResponse(res, {
@@ -39,16 +39,17 @@ const getMySchedule = catchAsync(
       message: "My Schedule fetched successfully!",
       data: result,
     });
-  }
+  },
 );
 
 const deleteFromDB = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
     const user = req.user;
-    const { id } = req.params;
+    const id = req.params.id as string;
+
     const result = await DoctorScheduleService.deleteFromDB(
       user as IAuthUser,
-      id
+      id,
     );
 
     sendResponse(res, {
@@ -57,7 +58,7 @@ const deleteFromDB = catchAsync(
       message: "My Schedule deleted successfully!",
       data: result,
     });
-  }
+  },
 );
 
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {

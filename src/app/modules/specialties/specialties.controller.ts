@@ -29,7 +29,8 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
+
   const result = await SpecialtiesService.deleteFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,

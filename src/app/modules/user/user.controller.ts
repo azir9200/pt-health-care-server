@@ -68,7 +68,8 @@ const getMyProfile = catchAsync(
 );
 
 const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+const id = req.params.id as string;
+
   const result = await UserService.changeProfileStatus(id, req.body);
 
   sendResponse(res, {

@@ -26,7 +26,7 @@ const getAllFromDB = catchAsync(
     const result = await ScheduleService.getAllFromDB(
       filters,
       options,
-      user as IAuthUser
+      user as IAuthUser,
     );
 
     sendResponse(res, {
@@ -36,11 +36,12 @@ const getAllFromDB = catchAsync(
       data: result.data,
       meta: result.meta,
     });
-  }
+  },
 );
 
 const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
+
   const result = await ScheduleService.getByIdFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -51,7 +52,8 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
+
   const result = await ScheduleService.deleteFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
