@@ -1,16 +1,17 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "dist/server.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "dist/server.js"
-      }
-    ]
-  }
-
+  "version": 2,
+  "buildCommand": "npm run build && npm run postinstall",
+  "installCommand": "npm install",
+  "functions": {
+    "dist/serverless.js": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/serverless.js"
+    }
+  ]
+}

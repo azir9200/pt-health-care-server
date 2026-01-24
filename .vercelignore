@@ -1,0 +1,50 @@
+# Uploads and temporary files (not needed in serverless)
+uploads
+*.log
+*.tmp
+
+# Git (not needed for deployment)
+.git
+.gitignore
+
+# Environment files (use Vercel environment variables instead)
+.env
+.env.local
+.env.*.local
+.env.test
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*.sublime-*
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__
+__mocks__
+*.test.js
+*.spec.js
+
+# Development tools config (not needed for build)
+.eslintrc*
+.prettierrc*
+.editorconfig
+.prettierignore
+
+# Documentation (optional, can be excluded to reduce size)
+README.md
+*.md
+docs/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.DS_Store
+
+# Build artifacts that will be regenerated
+# Note: dist is needed if pre-building, but Vercel will build it
+# If you're pre-building, uncomment the next line:
+# dist
